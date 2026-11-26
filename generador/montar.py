@@ -141,7 +141,7 @@ def problema(p, n, tipo):
     return (f'<article class="problema" id="{p["id"]}">'
             f'<header><span class="prob-n">{n}</span><div class="prob-tit"><h4>{p["titulo"]}</h4>'
             f'<div class="ficha"><span class="chip chip-{tipo}">{etiqueta}</span><span class="etq"><b>Tema</b> {p["id"][1]}</span>'
-            f'<span class="etq"><b>Contenido</b> {f["etiqueta"]}</span><span class="etq"><b>Curso</b> 2023-24</span></div></div>'
+            f'<span class="etq"><b>Contenido</b> {f["etiqueta"]}</span><span class="etq"><b>Curso</b> 2026/2027</span></div></div>'
             f'<span class="estrellas" title="Dificultad {f["dif"]} de 3" aria-label="Dificultad {f["dif"]} de 3">{"★"*f["dif"]}<span>{"★"*(3-f["dif"])}</span></span></header>'
             f'<div class="enunciado">{p["enunciado"]}</div>'
             f'<nav class="puertas n{len(claves)}" aria-label="Ayudas del problema {n}">{puertas}</nav>'

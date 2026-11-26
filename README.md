@@ -3,7 +3,7 @@
 Web de prácticas de Matemática Empresarial II (Grado en ADE): ejercicios estándar, problemas sin software
 y con Mathematica con resolución guiada, test de autoevaluación y glosario de comandos.
 
-- Web pública: https://mat-empresarial.iesseveroochoa.workers.dev (Cloudflare, se publica sola desde `main`)
+- Web pública: https://mat-empresarial.pages.dev (Cloudflare Pages, se publica sola desde `main`; directorio de salida `public`)
 - Web en Claude: https://claude.ai/artifact/McDR19e2hRRguVEJbfL5nv
 
 ## Estructura
@@ -20,7 +20,7 @@ generador/       contenido y generador
   montar.py      construye public/index.html
   comprobar.py   recalcula con sympy todos los resultados
   auditar.py     reglas de limpieza (sin $, sin \comandos, sin referencias a otros problemas)
-wrangler.jsonc   configuración de Cloudflare
+wrangler.jsonc   configuración para publicar como Worker (no se usa con Cloudflare Pages)
 ```
 
 ## Cambiar algo

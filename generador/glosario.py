@@ -1,0 +1,78 @@
+"""Glosario de órdenes de Mathematica que se usan en Matemática Empresarial II."""
+
+# (categoría, [(orden, sintaxis, para qué sirve, ejemplo, temas)])
+GLOSARIO = [
+("Sintaxis básica", [
+ ("=", "x = valor", "Asigna un valor o una expresión a un nombre.", "A = {{1,2},{3,4}}", "Todos"),
+ (":=", "f[x_] := expr", "Define una función (asignación diferida).", "f[x_, y_] := x^2 y", "3, 4"),
+ ("==", "lhs == rhs", "Igualdad lógica. Se usa para escribir ecuaciones en Solve.", "Solve[x^2 == 4, x]", "Todos"),
+ ("->  y  /.", "expr /. x -> a", "Sustituye: la regla x -> a y el operador /. (ReplaceAll) aplican la regla.", "x^2 + y /. {x -> 2, y -> 1}", "Todos"),
+ (";", "expr;", "Ejecuta la orden sin mostrar la salida.", "A = {{1,2},{3,4}};", "Todos"),
+ ("%", "%", "La última salida calculada.", "N[%]", "Todos"),
+ ("(* *)", "(* comentario *)", "Comentario: Mathematica lo ignora.", "(* matriz de Leontief *)", "Todos"),
+ ("Clear", "Clear[x, y]", "Borra el valor asignado a variables. Útil si x ya valía algo.", "Clear[x, y, z, λ]", "Todos"),
+ ("N  y  // N", "N[expr]  o  expr // N", "Valor numérico (decimal) de una expresión exacta.", "Inverse[A] // N", "Todos"),
+ ("Simplify, Expand, Factor", "Simplify[expr]", "Simplifican, desarrollan o factorizan expresiones.", "Factor[CharacteristicPolynomial[A, λ]]", "2, 3"),
+]),
+("Matrices y vectores", [
+ ("{ }", "{{a,b},{c,d}}", "Una matriz es una lista de filas. Un vector es una lista.", "A = {{1,2,0},{0,1,3},{2,0,1}}", "1, 2"),
+ ("MatrixForm", "MatrixForm[A]", "Muestra la matriz con formato. No la uses dentro de cálculos, solo para ver.", "MatrixForm[A]", "1, 2"),
+ ("IdentityMatrix", "IdentityMatrix[n]", "Matriz identidad de orden n.", "IdentityMatrix[3] - A", "1, 2"),
+ (".", "A . B", "Producto matricial (también matriz por vector). No confundir con *, que multiplica elemento a elemento.", "(IdentityMatrix[3] - A) . {50,60,40}", "1, 2"),
+ ("Transpose", "Transpose[A]", "Matriz traspuesta.", "IdentityMatrix[3] - Transpose[A]", "1, 2"),
+ ("Inverse", "Inverse[A]", "Matriz inversa (si existe).", "Inverse[IdentityMatrix[3] - A]", "1, 2"),
+ ("Det", "Det[A]", "Determinante.", "Det[IdentityMatrix[3] - A]", "1, 2"),
+ ("[[ ]]  y  ;;", "A[[i, j]], A[[1;;k, 1;;k]]", "Extrae elementos o submatrices (filas y columnas de 1 a k).", "A[[2, 3]]", "1, 2"),
+ ("Menores principales", "Table[Det[A[[1;;k,1;;k]]], {k,1,n}]", "Lista de los menores principales Δ1, …, Δn.", "Table[Det[M[[1;;k,1;;k]]], {k,1,3}]", "1, 2, 3"),
+ ("Total", "Total[A], Total[A, {2}]", "Sumas por columnas; con {2}, sumas por filas (Brauer-Solow).", "Total[A, {2}]", "1"),
+ ("DiagonalMatrix", "DiagonalMatrix[{a,b,c}]", "Matriz diagonal con esos elementos.", "B . Inverse[DiagonalMatrix[X]]", "1, 2"),
+ ("MatrixRank", "MatrixRank[A]", "Rango de una matriz.", "MatrixRank[A - 2 IdentityMatrix[3]]", "2"),
+ ("NullSpace", "NullSpace[A]", "Base de las soluciones de A·v = 0 (útil para autovectores y subespacios).", "NullSpace[A - 3 IdentityMatrix[3]]", "2, 4"),
+ ("LinearSolve", "LinearSolve[A, b]", "Resuelve el sistema A·x = b.", "LinearSolve[IdentityMatrix[3] - A, {10,20,15}]", "1"),
+ ("RowReduce", "RowReduce[A]", "Forma escalonada reducida (método de Gauss).", "RowReduce[{{1,2,3},{4,5,6}}]", "1, 2"),
+]),
+("Autovalores y diagonalización", [
+ ("CharacteristicPolynomial", "CharacteristicPolynomial[A, λ]", "Polinomio característico det(A − λI).", "CharacteristicPolynomial[A, λ] // Factor", "2"),
+ ("Eigenvalues", "Eigenvalues[A]", "Autovalores (repetidos según su multiplicidad).", "Eigenvalues[{{2,1},{1,2}}]", "2, 3, 4"),
+ ("Eigenvectors", "Eigenvectors[A]", "Autovectores, en el mismo orden. Si aparece un vector nulo, la matriz no es diagonalizable.", "Eigenvectors[A]", "2"),
+ ("Eigensystem", "{vals, vecs} = Eigensystem[A]", "Autovalores y autovectores a la vez.", "P = Transpose[vecs]", "2"),
+ ("DiagonalizableMatrixQ", "DiagonalizableMatrixQ[A]", "Devuelve True si A es diagonalizable.", "DiagonalizableMatrixQ[{{3,1},{0,3}}]", "2"),
+ ("PositiveDefiniteMatrixQ", "PositiveDefiniteMatrixQ[A]", "¿Es A definida positiva? Existen también NegativeDefiniteMatrixQ, PositiveSemidefiniteMatrixQ, NegativeSemidefiniteMatrixQ e IndefiniteMatrixQ.", "NegativeDefiniteMatrixQ[H]", "2, 3, 4"),
+ ("SymmetricMatrixQ", "SymmetricMatrixQ[A]", "Comprueba si la matriz es simétrica.", "SymmetricMatrixQ[A]", "2"),
+]),
+("Derivadas y funciones", [
+ ("D", "D[f, x], D[f, {x, 2}], D[f, x, y]", "Derivada parcial; de orden 2; derivada cruzada.", "D[x^2 y^3, x, y]", "3, 4"),
+ ("Gradiente", "D[f, {{x,y,z}}]", "Vector gradiente (también Grad[f, {x,y,z}]).", "D[x^2 + x y, {{x,y}}]", "3, 4"),
+ ("Hessiana", "D[f, {{x,y,z}, 2}]", "Matriz hessiana.", "D[x^3 - 3 x y + y^2, {{x,y}, 2}]", "3, 4"),
+ ("Matriz de una forma cuadrática", "D[q, {{x,y,z}, 2}]/2", "La matriz simétrica de q es la mitad de su hessiana.", "D[x^2 - 4 x y, {{x,y}, 2}]/2", "2"),
+ ("Log, Exp, Sqrt", "Log[x], Exp[x], Sqrt[x]", "Logaritmo neperiano (ln), exponencial y raíz. Las funciones van con mayúscula y corchetes.", "D[Log[x] + Log[y], x]", "3, 4"),
+ ("Limit", "Limit[f, x -> a]", "Límite (sirve para ver si f no está acotada).", "Limit[x^3 - 3 x, x -> -Infinity]", "4"),
+]),
+("Ecuaciones y optimización", [
+ ("Solve", "Solve[{ecs}, {vars}]", "Resuelve ecuaciones de forma exacta. Devuelve reglas {x -> …}.", "Solve[D[f, {{x,y}}] == {0,0}, {x,y}]", "Todos"),
+ ("NSolve", "NSolve[{ecs}, {vars}]", "Solución numérica (cuando Solve no da una expresión sencilla).", "NSolve[x^5 - 3 x + 1 == 0, x]", "2, 4"),
+ ("Reduce", "Reduce[cond, vars]", "Resuelve desigualdades o discute parámetros.", "Reduce[4 - a^2 > 0, a]", "2"),
+ ("Lagrangiana", "lag = f - λ (g - c)", "Función de Lagrange; después Solve[D[lag, {{x,y,λ}}] == 0, …].", "lag = x y - λ (2 x + 4 y - 80)", "4"),
+ ("Minimize, Maximize", "Minimize[{f, restricciones}, {vars}]", "Óptimo global exacto (valor y punto).", "Maximize[{x y, 2 x + 4 y == 80}, {x,y}]", "4"),
+ ("NMinimize, NMaximize", "NMinimize[{f, rest}, {vars}]", "Óptimo global numérico.", "NMaximize[{x y, x + y == 10}, {x,y}]", "4"),
+ ("FindMinimum, FindMaximum", "FindMinimum[f, {{x,x0},{y,y0}}]", "Óptimo local partiendo del punto (x0, y0).", "FindMinimum[x^3 - 3 x, {x, 0.5}]", "4"),
+]),
+("Gráficos", [
+ ("Plot", "Plot[f, {x, a, b}]", "Gráfica de una función de una variable.", "Plot[x^3 - 3 x, {x, -3, 3}]", "3, 4"),
+ ("Plot3D", "Plot3D[f, {x,a,b}, {y,c,d}]", "Superficie z = f(x, y).", "Plot3D[x^2 - y^2, {x,-2,2}, {y,-2,2}]", "3, 4"),
+ ("ContourPlot", "ContourPlot[f, {x,a,b}, {y,c,d}, Contours -> {…}]", "Curvas de nivel. Con ecuación (==) dibuja una curva.", "ContourPlot[x^2 + y^2 == 4, {x,-3,3}, {y,-3,3}]", "3, 4"),
+ ("RegionPlot", "RegionPlot[cond, {x,a,b}, {y,c,d}]", "Sombrea la región que cumple las desigualdades (para estudiar convexidad).", "RegionPlot[y >= x^2 && y <= 3, {x,-2,2}, {y,-1,4}]", "3"),
+ ("Show", "Show[g1, g2]", "Superpone varios gráficos (curvas de nivel y restricción).", "Show[ContourPlot[…], ContourPlot[…]]", "3, 4"),
+ ("Table", "Table[expr, {k, 1, n}]", "Construye listas; sirve para menores, evaluar puntos o dibujar varias curvas.", "Table[f /. p, {p, crit}]", "Todos"),
+]),
+]
+
+CONSEJOS = [
+ "Las órdenes empiezan por mayúscula y los argumentos van entre corchetes: <code>Det[A]</code>, no <code>det(A)</code>.",
+ "Para multiplicar matrices usa el punto <code>.</code>. El espacio o <code>*</code> multiplican elemento a elemento.",
+ "No llames <code>D</code>, <code>N</code>, <code>E</code>, <code>I</code> ni <code>C</code> a tus variables: son órdenes o constantes de Mathematica.",
+ "Escribe los decimales como fracciones (<code>{{1,2},{3,4}}/10</code>) para obtener resultados exactos.",
+ "La letra λ se escribe con <kbd>Esc</kbd> <code>l</code> <kbd>Esc</kbd>. También puedes usar <code>l</code> o <code>lam</code>.",
+ "Si una variable ya tenía valor y los resultados son raros, ejecuta <code>Clear[x, y, z]</code>.",
+ "Ejecuta cada celda con <kbd>Mayús</kbd> + <kbd>Intro</kbd>.",
+]
